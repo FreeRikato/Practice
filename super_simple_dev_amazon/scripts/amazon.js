@@ -531,7 +531,7 @@ products.forEach((products) => {
 
   <div class="product-spacer"></div>
 
-  <div class="added-to-cart">
+  <div class="added-to-cart js-add-to-cart-${products.id}">
     <img src="images/icons/checkmark.png">
     Added
   </div>
@@ -556,8 +556,13 @@ const cartButton = document.querySelectorAll(".js-add-to-cart");
 //in the cart to append into the cart array or else just increase
 //the quantity of the existing item
 
+//**Adding interactivity to the Add to Cart button**
+
+let added_timeout_id;
 cartButton.forEach((order) => {
   order.addEventListener("click", () => {
+    //1. Provide functionality of adding multiple items to the cart in an instance
+
     //We access the select element using DOM
     const cart_items_added = document.querySelector(
       `.js-quantity-selector-${order.dataset.productId}`
@@ -566,6 +571,8 @@ cartButton.forEach((order) => {
     cart_items_added_value = Number(cart_items_added.value);
 
     //Destructuring productId value into the variable
+
+    //2. Appending items and their quantity into cart array
     const { productId } = order.dataset;
 
     let matchingItem;
@@ -585,6 +592,8 @@ cartButton.forEach((order) => {
     //To display the no of items added to the cart on the cart element
     //in the top right corner we have to use accumulator pattern to
     //sum up the quantities of items in cart
+
+    //3. Modify the cart button in top right corner to be dynamic
     let cartQuantity = 0;
     cart.forEach((items) => {
       cartQuantity += items.quantity;
@@ -593,5 +602,17 @@ cartButton.forEach((order) => {
     const no_of_cart_items = document.querySelector(".cart-items");
 
     no_of_cart_items.innerHTML = cartQuantity;
+
+    //4. Display added message on clicking add to click
+    const added = document.querySelector(
+      `.js-add-to-cart-${order.dataset.productId}`
+    );
+
+    added.classList.add("js-added-to-cart");
+
+    if (added_timeout_id) clearTimeout(added_timeout_id);
+    added_timeout_id_id = setTimeout(() => {
+      added.classList.remove("js-added-to-cart");
+    }, 2000);
   });
 });
