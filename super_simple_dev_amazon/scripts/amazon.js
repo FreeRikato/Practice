@@ -551,8 +551,6 @@ product_display.innerHTML = items;
 
 const cartButton = document.querySelectorAll(".js-add-to-cart");
 
-let cartQuantity;
-
 //For each cart button that has been clicked is recorded using
 //addEventlistener and that specific product is checked if it exists
 //in the cart to append into the cart array or else just increase
@@ -570,17 +568,14 @@ cartButton.forEach((order) => {
 
     if (matchingItem) matchingItem.quantity++;
     else {
-      cart.push({
-        productName,
-        quantity: 1,
-      });
+      cart.push({ productName, quantity: 1 });
     }
 
     console.log(cart);
     //To display the no of items added to the cart on the cart element
     //in the top right corner we have to use accumulator pattern to
     //sum up the quantities of items in cart
-    cartQuantity = 0;
+    let cartQuantity = 0;
     cart.forEach((items) => {
       cartQuantity += items.quantity;
     });
