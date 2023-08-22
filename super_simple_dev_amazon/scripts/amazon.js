@@ -515,7 +515,7 @@ products.forEach((products) => {
   </div>
 
   <div class="product-quantity-container">
-    <select>
+    <select class="js-quantity-selector-${products.id}">
       <option selected value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -536,7 +536,7 @@ products.forEach((products) => {
     Added
   </div>
 
-  <button class="add-to-cart-button button-primary js-add-to-cart" data-product-name="${
+  <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${
     products.id
   }">
     Add to Cart
@@ -554,22 +554,32 @@ const cartButton = document.querySelectorAll(".js-add-to-cart");
 //For each cart button that has been clicked is recorded using
 //addEventlistener and that specific product is checked if it exists
 //in the cart to append into the cart array or else just increase
-//the quanity of the existing item
+//the quantity of the existing item
 
 cartButton.forEach((order) => {
   order.addEventListener("click", () => {
-    const productName = order.dataset.productName;
+    //We access the select element using DOM
+    const cart_items_added = document.querySelector(
+      `.js-quantity-selector-${order.dataset.productId}`
+    );
+    //Number of items selected is explicitly coerced to number for operation later
+    cart_items_added_value = Number(cart_items_added.value);
+
+    //Destructuring productId value into the variable
+    const { productId } = order.dataset;
 
     let matchingItem;
-
+    //ForEach loop matches the item added lately into the cart and if there exists an element already stored its value or else it is undefined
     cart.forEach((item) => {
-      if (item.productName === productName) matchingItem = item;
+      if (item.productId === productId) matchingItem = item;
     });
 
-    if (matchingItem) matchingItem.quantity++;
-    else {
-      cart.push({ productName, quantity: 1 });
-    }
+    //Ternary operator to check if the item already exists in the cart
+    //so that the quantity gets added up from existing value or else
+    //the number of items selected to be add to the cart is chosen
+    matchingItem
+      ? (matchingItem.quantity += cart_items_added_value)
+      : cart.push({ productId, quantity: cart_items_added_value });
 
     console.log(cart);
     //To display the no of items added to the cart on the cart element
