@@ -1,3 +1,9 @@
+/*
+  The products variable holds the products data as JSON data
+  with id, name, rating (stars & count), price in cents for
+  decimal division and keywords
+*/
+
 const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -471,11 +477,21 @@ const products = [
   },
 ];
 
+/*
+  Generate the product HTML components from above product
+  JSON data to display in the element product-grid in the main 
+  page
+*/
 const product_display = document.querySelector(".js-products");
 
 let items = "";
 
+//Iterate over the products data
+
 products.forEach((products) => {
+  //Using accumulator pattern, we store all the products data in
+  //items and display using innerHTML
+
   items += `<div class="product-container">
   <div class="product-image-container">
     <img class="product-image"
@@ -527,10 +543,20 @@ products.forEach((products) => {
   </button>
 </div>`;
 });
-
+// The products are displayed here
 product_display.innerHTML = items;
 
+//The cart button for all products should have click event with
+// functionality to be appended to cart array
+
 const cartButton = document.querySelectorAll(".js-add-to-cart");
+
+let cartQuantity;
+
+//For each cart button that has been clicked is recorded using
+//addEventlistener and that specific product is checked if it exists
+//in the cart to append into the cart array or else just increase
+//the quanity of the existing item
 
 cartButton.forEach((order) => {
   order.addEventListener("click", () => {
@@ -549,6 +575,18 @@ cartButton.forEach((order) => {
         quantity: 1,
       });
     }
+
     console.log(cart);
+    //To display the no of items added to the cart on the cart element
+    //in the top right corner we have to use accumulator pattern to
+    //sum up the quantities of items in cart
+    cartQuantity = 0;
+    cart.forEach((items) => {
+      cartQuantity += items.quantity;
+    });
+
+    const no_of_cart_items = document.querySelector(".cart-items");
+
+    no_of_cart_items.innerHTML = cartQuantity;
   });
 });
