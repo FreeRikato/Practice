@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Variables</title>
+    <style>
+      button {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cart quantity</h1>
+    <p>
+      <button onclick="console.log(`Cart Quantity: ${cartQuantity}`);">
+        Show Quantity
+      </button>
+      <button
+        onclick="cartQuantity += 1; console.log(`Cart Quantity: ${cartQuantity}`);"
+      >
+        Add to Cart
+      </button>
+      <button
+        onclick="cartQuantity += 2; console.log(`Cart Quantity: ${cartQuantity}`);"
+      >
+        +2
+      </button>
+      <button
+        onclick="cartQuantity += 3; console.log(`Cart Quantity: ${cartQuantity}`);"
+      >
+        +3
+      </button>
+      <button
+        onclick="cartQuantity = 0; 
+        console.log('Cart was reset');
+        console.log(`Cart Quantity: ${cartQuantity}`);"
+      >
+        Reset Cart
+      </button>
+    </p>
+    <script>
+      //The semicolon is like a period in english. It tells the computer that the line of code is over.
+      //   let variable1 = 3;
+      //   console.log(variable1);
+
+      //   let calculation = 2 + 2;
+      //   console.log(calculation);
+
+      //Can't change the value of a const variable
+      // const variable2 = 3;
+      // console.log(variable2);
+
+      //   console.log(calculation + 2);
+
+      //Javascipt automatically puts a semicolon on the last statement
+      let cartQuantity = 0;
+    </script>
+  </body>
+</html>

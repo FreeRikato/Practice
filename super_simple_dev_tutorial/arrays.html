@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>Todo List Practice 1</h3>
+    <input
+      id="ToDoInput"
+      placeholder="Todo name"
+      onkeydown="onkeydowninput(event)"
+    />
+    <button onclick="ToDo()">Add</button>
+    <div id="list"></div>
+    <script>
+      const ToDoArray = [];
+
+      function onkeydowninput(event) {
+        event.key === "Enter" && ToDo();
+      }
+      function ToDo() {
+        let ToDoArrayHTML = "";
+        let inputToDo = document.querySelector("#ToDoInput");
+        let listToDo = document.querySelector("#list");
+        ToDoArray.push(inputToDo.value);
+        console.log(ToDoArray);
+        console.log(ToDoArray.length);
+        inputToDo.value = "";
+        for (let i = 0; i < ToDoArray.length; i++)
+          ToDoArrayHTML += `<p>${ToDoArray[i]}</p>`;
+
+        console.log(ToDoArrayHTML);
+
+        listToDo.innerHTML = ToDoArrayHTML;
+      }
+    </script>
+  </body>
+</html>

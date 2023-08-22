@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM projects</title>
+  </head>
+  <body>
+    <h3>Youtube Subscribe Button</h3>
+    <button id="sub" onclick="subscribe()">Subscribe</button>
+    <p>Amazaon Shipping Calculator</p>
+    <p>Orders under $40 = $10 Shipping</p>
+    <p>Orders over $40 = FREE shipping</p>
+    <input
+      id="Cost"
+      placeholder="Cost of order"
+      onkeydown="handleCostKeyDown(event)"
+    />
+    <button onclick="Calculate()">Calculate</button>
+    <p id="Result"></p>
+
+    <script>
+      function handleCostKeyDown(event) {
+        event.key === "Enter" && Calculate();
+      }
+      function Calculate() {
+        const inputCost = Number(document.querySelector("#Cost").value);
+
+        let resultHolder = document.querySelector("#Result");
+
+        inputCost < 40
+          ? (resultHolder.innerText = `$${inputCost + 10}`)
+          : (resultHolder.innerText = `$${inputCost}`);
+      }
+      function subscribe() {
+        const subscribeButton = document.querySelector("#sub");
+        subscribeButton.innerText === "Subscribe"
+          ? (subscribeButton.innerHTML = "Subscribed")
+          : (subscribeButton.innerHTML = "Subscribe");
+      }
+    </script>
+  </body>
+</html>

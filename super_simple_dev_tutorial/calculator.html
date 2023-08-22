@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      button {
+        margin: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <button onclick="result+=9; history+= 9; console.log(history)">9</button>
+      <button onclick="result+=8; history+= 8; console.log(history)">8</button>
+      <button onclick="result+=7; history+= 7; console.log(history)">7</button>
+      <button onclick="history+= ' + '; console.log(history)">+</button>
+    </p>
+    <p>
+      <button onclick="result+=6; history+= 6; console.log(history)">6</button>
+      <button onclick="result+=5; history+= 5; console.log(history)">5</button>
+      <button onclick="result+=4; history+= 4; console.log(history)">4</button>
+      <button onclick="history+= ' - '; console.log(history)">-</button>
+    </p>
+    <p>
+      <button onclick="result+=1; history+= 1; console.log(history)">1</button>
+      <button onclick="result+=2; history+= 2; console.log(history)">2</button>
+      <button onclick="result+=3; history+= 3; console.log(history)">3</button>
+      <button
+        onclick="history+= ' = '; console.log(history); result = 0; history = ''"
+      >
+        =
+      </button>
+    </p>
+    <script>
+      let result = 0;
+      let history = "";
+      // (condition) && console.log('hello');
+      // if (condition) console.log('hello');
+      // Both of the above are the same
+      // The same is applicable for ||
+      // const currency = 'EUR' || 'USD'; console.log(currency);
+      // Output: EUR
+      // const currency = undefined && 'USD'; console.log(currency);
+      // Output: USD
+      // if (!condition) console.log('USD');
+    </script>
+  </body>
+</html>
