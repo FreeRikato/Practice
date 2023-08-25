@@ -5,7 +5,7 @@
 */
 
 import {cart} from '../data/cart.js';
-
+import { products } from '../data/products.js';
 /*
   Generate the product HTML components from above product
   JSON data to display in the element product-grid in the main 
