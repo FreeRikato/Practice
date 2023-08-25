@@ -4,7 +4,7 @@
   decimal division and keywords
 */
 
-import {cart} from '../data/cart.js';
+import { cart , addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
 /*
   Generate the product HTML components from above product
@@ -87,62 +87,46 @@ const cartButton = document.querySelectorAll(".js-add-to-cart");
 
 // Adding interactivity to the Add to Cart button**
 
+//*2. Modify the cart button in top right corner to be dynamic
+function updateCartQuantity(){
+  //To display the no of items added to the cart on the cart element
+  //in the top right corner we have to use accumulator pattern to
+   //sum up the quantities of items in cart
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  const no_of_cart_items = document.querySelector(".cart-items");
+
+  no_of_cart_items.innerHTML = cartQuantity;
+}
+
+//*3. Display added popup message on clicking add to click
 let added_timeout_id = {};
+function addedToCart_popup(productId){
+  const added = document.querySelector(
+    `.js-add-to-cart-${productId}`
+  );
+
+  added.classList.add("js-added-to-cart");
+
+  if (added_timeout_id[productId]) clearTimeout(added_timeout_id[productId]);
+  added_timeout_id[productId] = setTimeout(() => {
+    added.classList.remove("js-added-to-cart");
+  }, 2000);
+}
+
 cartButton.forEach((order) => {
   order.addEventListener("click", () => {
-    //*1. Provide functionality of adding multiple items to the cart in an instance
     //Destructuring productId value into the variable
-
     const { productId } = order.dataset;
-    //We access the select element using DOM
-    const cart_items_added = document.querySelector(
-      `.js-quantity-selector-${productId}`
-    );
-    //Number of items selected is explicitly coerced to number for operation later
-    let cart_items_added_value = Number(cart_items_added.value);
-
-
-    //*2. Appending items and their quantity into cart array
     
+    //The function is located in the /data/cart.js file since it is concerned about the cart whereas the updateCartQuantity() is located in this file since it is concerned about the cart button and addToCart_popup() deals with the webpage itself
+    addToCart(productId);
+    
+    updateCartQuantity();
 
-    let matchingItem;
-    //ForEach loop matches the item added lately into the cart and if there exists an element already stored its value or else it is undefined
-    cart.forEach((item) => {
-      if (item.productId === productId) matchingItem = item;
-    });
-
-    //Ternary operator to check if the item already exists in the cart
-    //so that the quantity gets added up from existing value or else
-    //the number of items selected to be add to the cart is chosen
-    matchingItem
-      ? (matchingItem.quantity += cart_items_added_value)
-      : cart.push({ productId, quantity: cart_items_added_value });
-
-    console.log(cart);
-    //To display the no of items added to the cart on the cart element
-    //in the top right corner we have to use accumulator pattern to
-    //sum up the quantities of items in cart
-
-    //*3. Modify the cart button in top right corner to be dynamic
-    let cartQuantity = 0;
-    cart.forEach((items) => {
-      cartQuantity += items.quantity;
-    });
-
-    const no_of_cart_items = document.querySelector(".cart-items");
-
-    no_of_cart_items.innerHTML = cartQuantity;
-
-    //*4. Display added message on clicking add to click
-    const added = document.querySelector(
-      `.js-add-to-cart-${productId}`
-    );
-
-    added.classList.add("js-added-to-cart");
-
-    if (added_timeout_id[productId]) clearTimeout(added_timeout_id[productId]);
-    added_timeout_id[productId] = setTimeout(() => {
-      added.classList.remove("js-added-to-cart");
-    }, 2000);
+    addedToCart_popup(productId);
   });
 });
