@@ -1,8 +1,4 @@
-export let cart = JSON.parse(localStorage.getItem("cart"));
-
-if (!cart) {
-  cart = [];
-}
+export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 //*1. Appending items and their selected quantity into cart array
 function saveStorage() {
@@ -15,13 +11,11 @@ export function addToCart(productId) {
     `.js-quantity-selector-${productId}`
   );
   //Number of items selected is explicitly coerced to number for operation later
-  let cart_items_added_value = Number(cart_items_added.value);
+  const cart_items_added_value = Number(cart_items_added.value);
 
-  let matchingItem;
-  //ForEach loop matches the item added lately into the cart and if there exists an element already stored its value or else it is undefined
-  cart.forEach((cartItem) => {
-    if (cartItem.productId === productId) matchingItem = cartItem;
-  });
+  const matchingItem = cart.find(
+    (cartItem) => cartItem.productId === productId
+  );
 
   //Ternary operator to check if the item already exists in the cart
   //so that the quantity gets added up from existing value or else
@@ -34,11 +28,6 @@ export function addToCart(productId) {
 }
 
 export function updateCartAfterDelete(productId) {
-  let newCart = [];
-  cart.forEach((cartItem) => {
-    if (cartItem.productId !== productId) newCart.push(cartItem);
-  });
-  cart = newCart;
-
+  cart = cart.filter((cartItem) => cartItem.productId != productId);
   saveStorage();
 }

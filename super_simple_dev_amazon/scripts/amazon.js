@@ -13,6 +13,9 @@ import { formatCurrency } from "./utils/currency.js";
   JSON data to display in the element product-grid in the main 
   page
 */
+
+updateCartQuantity();
+
 const product_display = document.querySelector(".js-products");
 
 let items = "";
