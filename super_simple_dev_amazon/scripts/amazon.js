@@ -4,9 +4,10 @@
   decimal division and keywords
 */
 
-import { cart , addToCart} from '../data/cart.js';
-import { products } from '../data/products.js';
-import { formatCurrency } from './utils/currency.js';
+import { cart, addToCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { calculateCartItemsQuantity } from "./utils/calculateCartQuantity.js";
+import { formatCurrency } from "./utils/currency.js";
 /*
   Generate the product HTML components from above product
   JSON data to display in the element product-grid in the main 
@@ -89,26 +90,22 @@ const cartButton = document.querySelectorAll(".js-add-to-cart");
 // Adding interactivity to the Add to Cart button**
 
 //*2. Modify the cart button in top right corner to be dynamic
-function updateCartQuantity(){
+function updateCartQuantity() {
   //To display the no of items added to the cart on the cart element
   //in the top right corner we have to use accumulator pattern to
-   //sum up the quantities of items in cart
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
-  });
+  //sum up the quantities of items in cart
+
+  const cartItemsQuantity = calculateCartItemsQuantity(cart);
 
   const no_of_cart_items = document.querySelector(".cart-items");
 
-  no_of_cart_items.innerHTML = cartQuantity;
+  no_of_cart_items.innerHTML = cartItemsQuantity;
 }
 
 //*3. Display added popup message on clicking add to click
 let added_timeout_id = {};
-function addedToCart_popup(productId){
-  const added = document.querySelector(
-    `.js-add-to-cart-${productId}`
-  );
+function addedToCart_popup(productId) {
+  const added = document.querySelector(`.js-add-to-cart-${productId}`);
 
   added.classList.add("js-added-to-cart");
 
@@ -122,10 +119,10 @@ cartButton.forEach((order) => {
   order.addEventListener("click", () => {
     //Destructuring productId value into the variable
     const { productId } = order.dataset;
-    
+
     //The function is located in the /data/cart.js file since it is concerned about the cart whereas the updateCartQuantity() is located in this file since it is concerned about the cart button and addToCart_popup() deals with the webpage itself
     addToCart(productId);
-    
+
     updateCartQuantity();
 
     addedToCart_popup(productId);

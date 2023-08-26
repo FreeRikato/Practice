@@ -1,5 +1,6 @@
 import { cart, updateCartAfterDelete } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { calculateCartItemsQuantity } from "./utils/calculateCartQuantity.js";
 import { formatCurrency } from "./utils/currency.js";
 
 let items = "";
@@ -95,6 +96,17 @@ cart.forEach((cartItem) => {
     `;
 });
 
+function updateCartHeaderMiddleSection() {
+  const checkoutCartQuantity = document.querySelector(
+    ".js-checkout-header-middle-section"
+  );
+
+  checkoutCartQuantity.innerHTML = `Checkout (<a class="return-to-home-link js-return-to-home"
+        href="amazon.html">${calculateCartItemsQuantity(cart)}</a>)`;
+}
+
+updateCartHeaderMiddleSection();
+
 document.querySelector(".js-order-summary").innerHTML = items;
 const deleteCartItem = document.querySelectorAll(".js-delete-link");
 
@@ -103,6 +115,7 @@ deleteCartItem.forEach((deleteButton) => {
     const { productId } = deleteButton.dataset;
 
     updateCartAfterDelete(productId);
+    updateCartHeaderMiddleSection();
 
     const removeElement = document.querySelector(
       `.js-cart-item-container-${productId}`
