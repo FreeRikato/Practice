@@ -31,3 +31,13 @@ export function updateCartAfterDelete(productId) {
   cart = cart.filter((cartItem) => cartItem.productId != productId);
   saveStorage();
 }
+
+export function updateCartQuantity(productId, newQuantity) {
+  const matchingItem = cart.find(
+    (cartItem) => cartItem.productId === productId
+  );
+
+  matchingItem.quantity = newQuantity;
+
+  saveStorage;
+}
