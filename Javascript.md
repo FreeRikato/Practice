@@ -384,17 +384,17 @@ try {
 
 #### Using console methods for debugging 🐞
 
-> console provides several methods to assist in debugging:
+>- console provides several methods to assist in debugging:
 
-> console.log(): Outputs a message to the console.
+>- console.log(): Outputs a message to the console.
 
-> console.error(): Outputs an error message.
+>- console.error(): Outputs an error message.
 
-> console.warn(): Outputs a warning message.
+>- console.warn(): Outputs a warning message.
 
-> console.table(): Displays tabular data.
+>- console.table(): Displays tabular data.
 
-> console.group() and console.groupEnd(): Group related messages together.
+>- console.group() and console.groupEnd(): Group related messages together.
 
 ```javascript
 console.log("This is a log message.");
@@ -658,10 +658,21 @@ const timer = new Timer();  // 1, 2, 3...
 // In this case, the arrow function doesn't bind its own this, 
 // so it uses the this value from the surrounding Timer function.
 ```
-##### Arrow function and `this` : Toddler explanation
 > In traditional functions, the value of this is determined by how the function is called. This is known as dynamic context.
 
-> 
+> Arrow functions do not have their own `this`. Instead, they capture the `this` value from their surrounding context when they're created. This is often called lexical scoping.
+##### Arrow function and `this` : Toddler explanation
+
+>Imagine you're in a library (which is a big function). Each section in the library is like a smaller function within the big function. The library has a rule: "Speak in the language you hear the most around you."
+
+><img src="./images/image_4.jpeg">
+
+>You (the this keyword) adapt your behavior based on where you are:
+
+>Traditional Function: When you move to different sections of the library (functions), you might start speaking different languages, because each section might have people speaking different languages. It's dynamic and changes based on the section (how the function is called).
+
+>Arrow Function: But let's say you're wearing headphones (you're inside an arrow function). Instead of listening to the current section's language, you always listen to a podcast in your native language. No matter where you go in the library, you keep speaking your native language, because that's what you hear in your headphones. Arrow functions, like headphones, keep the language (or this context) from where they were first placed (created).
+
 ##### Differences from Traditional functions
 >
 >- Shorter Syntax: Arrow functions can be more concise.
@@ -709,34 +720,241 @@ console.log(arr2); // Outputs: [1, 2, 3, 4, 5, 6]
 ---
 
 ## 6️⃣ Objects and Arrays
-
+> JavaScript objects are essentially collections of key-value pairs. Keys are strings (or Symbols), and values can be anything: numbers, strings, functions, other objects.
 ### 📦 Creating Objects
 
-- Object literals, constructors 🛠️
+#### Object literals, constructors 🛠️
+
+> Object literals
+```javascript
+let person = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30
+};
+```
+> Constructors
+```javascript
+let person = new Object();
+person.firstName = "John";
+person.lastName = "Doe";
+person.age = 30;
+```
 
 ### 🏷️ Properties and Methods
+>Properties in objects are essentially variables within that object.
 
+> Accessing properties:
+```javascript
+console.log(person.firstName); // John
+console.log(person["lastName"]); // Doe
+```
+>Adding properties:
+```javascript
+person.country = "USA";
+```
+>Methods:
+```javascript
+person.fullName = function() {
+    return this.firstName + " " + this.lastName;
+};
+
+console.log(person.fullName()); // John Doe
+```
 ### 📑 Array Basics
 
-- Creation, methods, and properties
+#### Creation, methods, and properties
 
 ### 🔍 Iterating Over Arrays and Objects
+#### Arrays
+> 1. The Classic `for` Loop
 
+> 2. The `for..of` Loop
+```javascript
+for (let fruit of fruits) {
+    console.log(fruit);
+}
+```
+> 3. The `forEach` method
+```javascript
+fruits.forEach(function(fruit) {
+    console.log(fruit);
+});
+
+// Or, using an arrow function:
+fruits.forEach(fruit => console.log(fruit));
+
+```
+#### Objects
+> 1. The Classic `for...in` Loop
+```javascript
+let person = {
+    name: 'John',
+    age: 25,
+    profession: 'developer'
+};
+
+for (let key in person) {
+    if (person.hasOwnProperty(key)) { // Ensures only own properties are considered
+        console.log(key, person[key]);
+    }
+}
+```
+> 2. Object methods
+
+>- Object.keys(): Returns an array of an object's keys.
+>
+>- Object.values(): Returns an array of an object's values.
+>
+>- Object.entries(): Returns an array of key-value pairs.
+
+> 3. Iterating with `for...of` and `Object.entries()`
+```javascript
+for (let [key, value] of Object.entries(person)) {
+    console.log(key, value);
+}
+```
 ---
 
 ## 7️⃣ The Document Object Model (DOM)
+> The Document Object Model (DOM) is a programming interface for web documents. It represents the structure of a document as a tree of objects. Each object corresponds to a part of the document, such as an element or an attribute. In simpler terms, the DOM is a structured representation of the content in a web page.
 
+> Imagine you've written an HTML document. Once the browser reads that document, it creates a representation of the document in memory, and that's the DOM. This representation is a hierarchical structure, much like a tree, where each node is an object representing part of the document.
 ### 📜 What is the DOM?
 
-- Relationship between HTML, CSS, and JavaScript
-
+#### Relationship between HTML, CSS, and JavaScript
+>JavaScript can:
+>
+>Read the DOM: For instance, find out what text is inside a certain element.
+>
+>Modify the DOM: Like changing the content of an element, which updates what a user sees on the web page.
+>   
+>Listen for events on the DOM: Such as a button being clicked or a form being submitted.
 ### 🔍 Selecting Elements
 
-- By ID, class, tag name, query selectors 🏷️
+#### By ID, class, tag name, query selectors 🏷️
+
+> `getElementById()`: Returns the element that has the ID attribute with the specified value.
+
+```javascript
+<!-- HTML -->
+<div id="uniqueID">Hello, World!</div>
+
+// JavaScript
+let element = document.getElementById('uniqueID');
+console.log(element.textContent);  // Outputs: Hello, World!
+```
+> `getElementsByClassName()`: Returns a collection of all elements in the document with the specified class name, as a NodeList object.
+
+```javascript
+<!-- HTML -->
+<div class="commonClass">First</div>
+<div class="commonClass">Second</div>
+
+// JavaScript
+let elements = document.getElementsByClassName('commonClass');
+for(let el of elements) {
+    console.log(el.textContent);  // Outputs: First, then Second
+}
+```
+> `getElementsByTagName()`: Returns a collection of all elements in the document with the specified tag name, as a NodeList object.
+
+```javascript
+<!-- HTML -->
+<p>First paragraph.</p>
+<p>Second paragraph.</p>
+
+// JavaScript
+let paragraphs = document.getElementsByTagName('p');
+for(let p of paragraphs) {
+    console.log(p.textContent);
+}
+```
+> `querySelector()`: Returns the first element that matches a specified CSS selector(s) in the document.
+> 
+> `querySelectorAll()`: Returns all elements that match a specified CSS selector(s) in the document, as a static NodeList object.
+
+```javascript
+<!-- HTML -->
+<div class="sample">A</div>
+<p class="sample">B</p>
+
+// JavaScript
+let firstSample = document.querySelector('.sample'); // Returns the first element with class "sample"
+console.log(firstSample.textContent); // Outputs: A
+
+let allSamples = document.querySelectorAll('.sample'); // Returns all elements with class "sample"
+allSamples.forEach(el => console.log(el.textContent)); // Outputs: A, then B
+```
+> Differences between HTMLCollection and NodeList:
+> - `getElementsByClassName` and `getElementsByTagName` return a live HTMLCollection. This means if the DOM updates (like if an element is added or removed), the collection will immediately reflect these changes.
+> 
+> - `querySelectorAll`, however, returns a static NodeList. It doesn't update if the DOM changes.
+>
+> - Note: While NodeList and HTMLCollection might seem like arrays, they aren't. They do have a `length` property, but for methods like `forEach`, only NodeList from `querySelectorAll` has it. For HTMLCollection, you'd typically convert it to an array first or use a for loop.
+
 
 ### ✍️ Modifying the DOM
 
-- Changing content, attributes, and styles 🎨
+#### Changing content, attributes, and styles 🎨
+
+> 1. Changing content: `textContent`, `innerHTML`, `innerText`
+
+> 2. Changing attributes: `getAttribute()`, `setAttribute()`
+
+```javascript
+let img = document.querySelector("img");
+
+// Using setAttribute method
+img.setAttribute("src", "new-image.jpg");
+
+// Directly as properties
+img.src = "new-image.jpg";
+```
+
+> 3. Changing styles: `style`
+
+```javascript
+let div = document.querySelector("div");
+
+// Setting individual styles
+div.style.backgroundColor = "blue";
+div.style.fontSize = "20px";
+
+// Setting multiple styles at once using CSSText
+div.style.cssText = "background-color: red; font-size: 25px;";
+```
+> 4. Example using class
+```javascript
+// JavaScript
+div.classList.add("active");
+
+// CSS
+.active {
+    background-color: green;
+    font-size: 30px;
+}
+```
+> 5. Adding and Removing Nodes:
+> 
+> - appendChild: Adds a new child node at the end.
+>
+> - insertBefore: Inserts a node before another node.
+>
+> - removeChild: Removes a child node.
+```javascript
+let parent = document.querySelector(".parent");
+let newElement = document.createElement("div");
+
+// Appending new element
+parent.appendChild(newElement);
+
+// Inserting new element before the first child
+parent.insertBefore(newElement, parent.firstChild);
+
+// Removing a child
+parent.removeChild(newElement);
+```
 
 ---
 

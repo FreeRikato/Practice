@@ -110,5 +110,3 @@
    - 🚀 **Deploying to production**
 
 ---
-
-This syllabus is presented with enhancements including emojis and styles for better visualization and engagement. The use of actual images would require a platform that supports embedded images, which Markdown does not inherently provide. If you're using a platform like GitHub, GitLab, or any platform that supports Markdown with image embedding, you can use `![Image Description](image-url)` to embed images.
