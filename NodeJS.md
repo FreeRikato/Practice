@@ -1,7 +1,3 @@
-**🚀 Node.js Course Syllabus 🚀**
-
----
-
 ### 📌 **1. Introduction to Node.js** 🌐
    - 📘 **Definition & Overview**
      - 🧠 What is Node.js?
@@ -108,5 +104,3 @@
    - 🏗️ **Developing a full-fledged application**
    - 📝 **Peer code reviews**
    - 🚀 **Deploying to production**
-
----
