@@ -10,7 +10,7 @@ import { calculateCartItemsQuantity } from "./utils/calculateCartQuantity.js";
 import { formatCurrency } from "./utils/currency.js";
 /*
   Generate the product HTML components from above product
-  JSON data to display in the element product-grid in the main 
+  JSON data to display in the element product-grid in the main
   page
 */
 
